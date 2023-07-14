@@ -15,6 +15,9 @@ html , body {
   overflow-x: hidden;
 }
 
+.homepage_bg{
+  background-image:url("../src/assets/Images/bghome.svg")
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
