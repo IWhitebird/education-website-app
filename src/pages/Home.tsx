@@ -57,6 +57,7 @@ const Home = (): JSX.Element => {
                 muted
                 loop
                 autoPlay
+                className='shadow-[12px_12px_0_0] shadow-white'
                 >
                 <source src={Banner} type="video/mp4" />
                 </video>
