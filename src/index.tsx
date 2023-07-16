@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers/reducer';
 import { configureStore } from '@reduxjs/toolkit';
+import { Toaster } from 'react-hot-toast';
 
 
 const store = configureStore({
@@ -20,7 +21,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
       <Provider store={store}>
+        <Toaster/>
         <BrowserRouter>
+
           <App />
         </BrowserRouter>
       </Provider>

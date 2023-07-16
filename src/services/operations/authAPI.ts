@@ -1,6 +1,6 @@
 import { toast } from "react-hot-toast";
 import { setLoading, setToken } from "../../slices/authSlice";
-// import { resetCart } from "../../slices/cartSlice";
+import { resetCart } from "../../slices/cartSlice";
 import { setUser } from "../../slices/profileSlice";
 import { apiConnector } from "../apiconnector";
 import { endpoints } from "../apis";
@@ -27,6 +27,7 @@ export function sendOtp(email: string, navigate: any) {
       console.log(response.data.success);
 
       if (!response.data.success) {
+        console.log("failed to scvceeed sendotp authapi frontend")
         throw new Error(response.data.message);
       }
 
@@ -121,7 +122,7 @@ export function logout(navigate: any) {
   return (dispatch: any) => {
     dispatch(setToken(null));
     dispatch(setUser(null));
-    // dispatch(resetCart());
+    dispatch(resetCart());
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     toast.success("Logged Out");
@@ -151,7 +152,7 @@ export function getPasswordResetToken(email: string, setEmailSent: any) {
   };
 }
 
-export function resetPassword(password: string, confirmPassword: string, token: string) {
+export function resetPassword(password: string, confirmPassword: string, token: any , navigate: any) {
   return async (dispatch: any) => {
     dispatch(setLoading(true));
     try {

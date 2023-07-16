@@ -22,18 +22,17 @@ export async function signUp(req :Request , res : Response){
       password,
       confirmPassword,
       accountType,
-      contactNumber,
       otp
     } = req.body;
 
     if(!firstName || !lastName || !email || !password || 
-      !confirmPassword || !accountType || !contactNumber || !otp){
-      return res.status(400).json({sucess : false , error: 'All fields are required' });
+      !confirmPassword || !accountType || !otp){
+      return res.status(400).json({success : false , error: 'All fields are required' });
       }
 
       if(password !== confirmPassword){
         return res.status(400).json({
-          sucess : false , 
+          success : false , 
           error: 'Password and Confirm Password should be same'
         });
       }
@@ -41,7 +40,7 @@ export async function signUp(req :Request , res : Response){
       const existingUser = await User.findOne({email});
       if(existingUser){
         return res.status(400).json({
-          sucess : false , 
+          success : false , 
           error: 'User already exists'
         });
       }
@@ -52,12 +51,12 @@ export async function signUp(req :Request , res : Response){
 
       if(recentOtp.length === 0){ 
         return res.status(400).json({
-          sucess : false , 
+          success : false , 
           error: 'No OTP found'
         });
       } else if( otp !== recentOtp[0].otp){
         return res.status(400).json({
-          sucess : false ,
+          success : false ,
           error: 'Invalid OTP'
         });
       }
@@ -79,7 +78,6 @@ export async function signUp(req :Request , res : Response){
           firstName,
           lastName,
           email,
-          contactNumber,
           password : HashedPassword,
           accountType : accountType,
           approved : approved,
@@ -87,7 +85,7 @@ export async function signUp(req :Request , res : Response){
           image :`https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`
         });
         res.status(200).json({
-           sucess : true ,
+           success : true ,
            message: "User created successfully",
            user, 
           });
@@ -96,7 +94,7 @@ export async function signUp(req :Request , res : Response){
   catch(error){
     console.log(error);
     return res.status(500).json({
-        sucess : false ,
+        success : false ,
         message: 'Internal Server error in signup' 
       });
   }
@@ -111,7 +109,7 @@ export async function login(req:Request , res : Response){
   
      if(!email || !password){
       return res.status(403).json({
-        sucess : false , 
+        success : false , 
         error: 'All fields are required' 
       });
      }
@@ -120,7 +118,7 @@ export async function login(req:Request , res : Response){
 
       if(!user){
         return res.status(403).json({
-          sucess : false , 
+          success : false , 
           error: 'User does not exists'
         });
       }
@@ -143,7 +141,7 @@ export async function login(req:Request , res : Response){
         }
          
         res.cookie('token' , token , options).status(200).json({
-          sucess : true ,
+          success : true ,
           message: "User logged in successfully",
           user,
           token
@@ -151,7 +149,7 @@ export async function login(req:Request , res : Response){
 
       } else {
         return res.status(401).json({
-          sucess : false , 
+          success : false , 
           error: 'Invalid Password'
         });
       }
@@ -160,7 +158,7 @@ export async function login(req:Request , res : Response){
     catch(error){
       console.log(error);
       return res.status(500).json({
-        sucess : false ,
+        success : false ,
         message: 'Internal Server error in login'
       });
     }
@@ -173,7 +171,7 @@ export async function sendOTP(req: Request, res: Response) {
         const checkUserPresent = await User.findOne({email});
 
         if(checkUserPresent){
-            return res.status(400).json({sucess : false , error: 'User already exists' });
+            return res.status(400).json({success : false , error: 'User already exists' });
         }
         
         var otp = OtpGenerator.generate(6, { 
@@ -197,14 +195,14 @@ export async function sendOTP(req: Request, res: Response) {
           const otpBody = await OTP.create(otpPayload);
 
           return res.status(200).json({
-            sucess : true ,
+            success : true ,
             otpBody 
             });
   }
   catch(error){
     console.log(error);
     return res.status(500).json({
-        sucess : false ,
+        success : false ,
         message: 'Internal Server error' 
       });
   }

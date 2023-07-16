@@ -112,6 +112,7 @@ function Navbar() {
           </ul>
         </nav>
         {/* Login / Signup / Dashboard */}
+        
         <div className="hidden items-center gap-x-4 md:flex">
           {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
             <Link to="/dashboard/cart" className="relative">
@@ -135,6 +136,7 @@ function Navbar() {
           )}
           {token !== null && <ProfileDropdown />}
         </div>
+
         <button className="mr-4 md:hidden">
           <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
         </button>
