@@ -10,6 +10,8 @@ import LearningLanguageSection from '../components/core/HomePage/LearningLanguag
 import InstructorSection from '../components/core/HomePage/InstructorSection';
 import Footer from '../components/common/Footer';
 import ExploreMore from '../components/core/HomePage/ExploreMore';
+import RedBlob from '../assets/Homepage/RedBlob.svg';
+import BlueBlob from '../assets/Homepage/BlueBlob.svg';
 
 
 
@@ -57,7 +59,8 @@ const Home = (): JSX.Element => {
                 muted
                 loop
                 autoPlay
-                className='shadow-[12px_12px_0_0] shadow-white'
+                preload="metadata"
+                className='shadow-[0_0_20px_0] shadow-[#68e3ff]'
                 >
                 <source src={Banner} type="video/mp4" />
                 </video>
@@ -93,7 +96,8 @@ const Home = (): JSX.Element => {
 
                     codeblock={`<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\n`}
                     backgroudGradient={"bg-gradient-to-r from-[#F9A826] to-[#F86D34]"}
-                    codeColor={"text-yellow-25"}
+                    codeColor={"text-[#FF5331]"}
+                    myBlob={RedBlob}
                 />
             </div>
 
@@ -125,9 +129,10 @@ const Home = (): JSX.Element => {
                         }
                     }
 
-                    codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\n/head>\n`}
+                    codeblock={`<<!DOCTYPE html>\n<html>\nhead><title>Example</title><linkrel="stylesheet"href="styles.css">\nrel="stylesheet"href="styles.css">\n/head>\n`}
                     backgroudGradient={"bg-gradient-to-r from-[#F9A826] to-[#F86D34]"}
-                    codeColor={"text-yellow-25"}
+                    codeColor={"text-white"}
+                    myBlob={BlueBlob}
                 />
             </div>
 

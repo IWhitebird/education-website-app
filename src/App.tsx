@@ -9,6 +9,13 @@ import OpenRoute from './components/core/Auth/OpenRoute';
 import VerifyEmail from './pages/verifyEmail';
 import ForgotPassword from './pages/ForgotPassword';
 import UpdatePassword from './pages/updatePassword';
+import About from './pages/About';
+import Dashboard from './pages/Dashboard';
+import PrivateRoute from './components/core/Auth/CloseRoute';
+import { ACCOUNT_TYPE } from "./utils/constants";
+import Contact from './pages/Contact';
+import MyProfile from './components/core/Dashboard/My-Profile'
+import Error from './pages/Error';
 
 
 function App() {
@@ -63,6 +70,61 @@ function App() {
             </OpenRoute>
           }
         />
+
+
+        <Route
+          path="/about"
+          element={
+            <About/>
+          }
+        />
+
+        <Route
+          path="/contact"
+          element={
+            <Contact/>
+          }
+        />
+
+
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard/>
+            </PrivateRoute>   
+          }
+        >
+          <Route path="/dashboard/my-profile" element={<MyProfile />} />
+         
+          {/* <Route path="/dashboard/Settings" element={<Settings />} /> */}
+
+
+          {/* {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route path="/dashboard/cart" element={<Cart />} />
+              <Route
+                path="/dashboard/enrolled-courses"
+                element={<EnrolledCourses />}
+              />
+            </>
+          )} */}
+
+          {/* {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+            <>
+              <Route path="/dashboard/add-course" element={<AddCourse />} />
+              <Route path="/dashboard/my-courses" element={<MyCourses />} />
+              <Route
+                path="/dashboard/edit-course/:courseId"
+                element={<EditCourse />}
+              />
+            </>
+          )} */}
+
+          <Route path="*" element={<Error/>} />
+
+        </Route>
+
 
 
       </Routes>

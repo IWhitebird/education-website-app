@@ -41,7 +41,7 @@ const TimelineSection: React.FC = () => {
         <div className='w-[45%] flex flex-col gap-5'>
           {timeline.map((element, index) => {
             return (
-              <div className='flex flex-col'>
+              <div className='flex flex-col' key={index}>
 
                 <div  className='flex flex-row gap-6' key={index}>
                   <div className='w-[50px] h-[50px] bg-white flex items-center justify-center'>
@@ -66,7 +66,7 @@ const TimelineSection: React.FC = () => {
           <img
             src={timelineImage}
             alt='timelineImage'
-            className='shadow-white object-cover h-fit'
+            className='object-cover h-fit shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)] shadow-pink-50'
           />
           <div className='absolute scale-110 bg-caribbeangreen-700 flex flex-row text-white uppercase py-7 left-[50%] translate-x-[-50%] translate-y-[-50%]'>
             <div className='flex flex-row gap-5 items-center border-r border-caribbeangreen-300 px-7'>

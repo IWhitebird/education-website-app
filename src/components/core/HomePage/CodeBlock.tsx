@@ -3,6 +3,7 @@ import CTAButton from "../HomePage/CTAButton";
 import HighlightText from './HighlightText';
 import { FaArrowRight } from "react-icons/fa";
 import { TypeAnimation } from 'react-type-animation';
+import aa from "./aa.svg"
 
 type CodeBlockProps = {
   position: string;
@@ -21,6 +22,7 @@ type CodeBlockProps = {
   codeblock: string;
   backgroudGradient: string;
   codeColor: string;
+  myBlob: string;
 };
 
 const CodeBlocks: React.FC<CodeBlockProps> = ({
@@ -31,7 +33,8 @@ const CodeBlocks: React.FC<CodeBlockProps> = ({
   ctabtn2,
   codeblock,
   backgroudGradient,
-  codeColor
+  codeColor,
+  myBlob
 }) => {
   return (
     <div className={`flex ${position} my-20 justify-between gap-10`}>
@@ -60,40 +63,42 @@ const CodeBlocks: React.FC<CodeBlockProps> = ({
     </div>
 
      {/*Section 2*/}
-     <div className=' h-fit  flex flex-row text-10[px] w-[100%] py-4 lg:w-[500px]'> 
-        {/*HW -> BG gradient*/}
 
-        <div className='text-center flex flex-col w-[10%] text-richblack-400 font-inter font-bold'>
-            <p>1</p>
-            <p>2</p>
-            <p>3</p>
-            <p>4</p>
-            <p>5</p>
-            <p>6</p>
-            <p>7</p>
-            <p>8</p>
-            <p>9</p>
-            <p>10</p>
-            <p>11</p>
-        </div>
+        <div className='relative h-fit flex flex-row text-10[px] w-[100%] py-4 lg:w-[500px] bg-white bg-opacity-5  rounded-md  border-[#5f5f5f] border-opacity-50 border-[1px]'> 
+            <img src={myBlob} className='absolute top-[-80px] left-[-100px]'/>
+            <div className='text-center flex flex-col w-[10%] text-richblack-400 font-inter font-bold'>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+                <p>4</p>
+                <p>5</p>
+                <p>6</p>
+                <p>7</p>
+                <p>8</p>
+                <p>9</p>
+                <p>10</p>
+                <p>11</p>
+            </div>
 
-        <div className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} pr-2`}>
-           <TypeAnimation
-            sequence={[codeblock, 2000, ""]}
-            repeat={Infinity}
-            cursor={true}
-           
-            style = {
-                {
-                    whiteSpace: "pre-line",
-                    display:"block",
+            <div className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} pr-2`}>
+              <TypeAnimation
+                sequence={[codeblock, 2000, ""]}
+                repeat={Infinity}
+                cursor={true}
+              
+                style = {
+                    {
+                        whiteSpace: "pre-line",
+                        display:"block",
+                    }
                 }
-            }
-            omitDeletionAnimation={true}
-           />
+                omitDeletionAnimation={true}      
+              />
+            </div>
+
         </div>
 
-     </div>
+
 
 
     </div>

@@ -8,7 +8,7 @@ const HighlightText: React.FC<HighlightTextProps> = ({ text }) => {
   return (
     <>
         {" "}
-        <span className='font-bold bg-gradient-to-r from-blue-300 to-blue-100 bg-clip-text text-transparent'>
+        <span className='font-bold bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] bg-clip-text text-transparent'>
         {text}
         </span>
     </>
