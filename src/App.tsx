@@ -101,7 +101,7 @@ function App() {
           <Route path="/dashboard/Settings" element={<Settings />} />
 
 
-          {/* {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
               <Route path="/dashboard/cart" element={<Cart />} />
               <Route
@@ -109,7 +109,7 @@ function App() {
                 element={<EnrolledCourses />}
               />
             </>
-          )} */}
+          )}
 
           {/* {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
             <>
