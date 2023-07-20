@@ -4,7 +4,7 @@ import { apiConnector } from "../apiconnector";
 import { settingsEndpoints } from "../apis";
 import { logout } from "./authAPI";
 
-const {
+const {   
   UPDATE_DISPLAY_PICTURE_API, 
   UPDATE_PROFILE_API,
   CHANGE_PASSWORD_API,
@@ -48,11 +48,12 @@ export function updateProfile(token: any, formData: FormData) {
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
+      console.log(response);
       const userImage = response.data.updatedUserDetails.image
         ? response.data.updatedUserDetails.image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`;
       dispatch(
-        setUser({ ...response.data.updatedUserDetails, image: userImage })
+        setUser({ ...response.data.updatedUserDetails , image: userImage })
       );
       toast.success("Profile Updated Successfully");
     } catch (error) {

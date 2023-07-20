@@ -14,19 +14,18 @@ export const updateProfile = async (req : AuthenticatedRequest, res : Response) 
 
         const userDetail = await User.findById(id);
 
-        const profileId = userDetail?.additionalDetails;
+        const profile  = await Profile.findById(userDetail?.additionalDetails);
 
-        const profileDetails = await Profile.findById(profileId);
+        profile!.dateOfBirth = dateOfBirth;
+        profile!.gender = gender;
+        profile!.about = about;
+        profile!.contactNumber = contactNumber;
 
-        profileDetails!.dateOfBirth = dateOfBirth;
-        profileDetails!.gender = gender;
-        profileDetails!.about = about;
-        profileDetails!.contactNumber = contactNumber;
+        await profile?.save();
+        
+        const updatedUserDetails = await User.findById(id).populate('additionalDetails').exec();
 
-        await profileDetails?.save();
-
-        res.status(200).json({success:true, message: "Profile updated successfully" , profileDetails});
-    
+        res.status(200).json({success:true, message: "Profile updated successfully" ,updatedUserDetails});
     }
     catch(error){
         console.log(error);
@@ -129,3 +128,36 @@ export const getEnrolledCourses = async (req : AuthenticatedRequest, res : Respo
         res.status(500).json({success:false, message: "Internal server error in getEnrolledCourses"});
     }
 };
+
+
+export const changePassword = async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const { oldPassword, newPassword } = req.body;
+      const id = req.user.id;
+  
+      const oldProfile = await User.findById(id);
+  
+      if (!oldProfile) {
+        return res.status(404).json({ success: false, message: "User not found" });
+      }
+  
+      const alreadyPass = oldProfile.password;
+
+      const bcrypt = require('bcrypt');
+  
+      const passwordMatches = await bcrypt.compare(oldPassword, alreadyPass);
+  
+      if (!passwordMatches) {
+        return res.status(400).json({ success: false, message: "Old password is incorrect" });
+      }
+  
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+  
+      const updated = await User.findByIdAndUpdate(id, { password: hashedNewPassword });
+  
+      return res.status(200).json({ success: true, message: "Password changed successfully" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ success: false, message: "Internal server error in changePassword" });
+    }
+  };

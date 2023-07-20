@@ -27,7 +27,6 @@ export default function UpdatePassword() {
   } = useForm<UpdatePassord>()
 
   const submitPasswordForm = async (data : FormData) => {
-    // console.log("password Data - ", data)
     try {
       await changePassword(token, data)
     } catch (error) {

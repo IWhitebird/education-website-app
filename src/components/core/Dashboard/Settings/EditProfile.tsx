@@ -12,7 +12,7 @@ interface UserProfile extends FormData {
   lastName: string;
   dateOfBirth: string;
   gender: string;
-  contactNumber: string;
+  contactNumber: number;
   about: string; 
 }
 
