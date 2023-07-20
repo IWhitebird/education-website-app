@@ -2,11 +2,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 import IconBtn from "../../../common/IconBtn"
+import { RootState } from "../../../../reducers/reducer"
 
 export default function RenderTotalAmount() {
-  const { total, cart } = useSelector((state) => state.cart)
-  const { token } = useSelector((state) => state.auth)
-  const { user } = useSelector((state) => state.profile)
+  const { total, cart } = useSelector((state : RootState) => state.cart)
+  const { token } = useSelector((state: RootState) => state.auth)
+  const { user } = useSelector((state: RootState) => state.profile)
   const navigate = useNavigate()
   const dispatch = useDispatch<any>()
 

@@ -3,8 +3,15 @@ import { toast } from "react-hot-toast";
 
 interface Course {
   _id: string;
+  thumbnail: string;
+  courseName: string;
+  category: {
+    name: string;
+  };
+  ratingAndReviews: {
+    length: number;
+  };
   price: number;
-  // Add other properties as needed
 }
 
 interface CartState {

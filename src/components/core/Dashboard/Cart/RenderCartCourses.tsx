@@ -1,9 +1,8 @@
 import { FaStar } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import ReactStars from "react-rating-stars-component";
+import ReactStars from "react-stars";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "../../../../store"; // Adjust the import path based on your project's store setup
-
+import { RootState } from "../../../../reducers/reducer";
 import { removeFromCart } from "../../../../slices/cartSlice";
 
 interface Course {
@@ -21,11 +20,11 @@ interface Course {
 
 export default function RenderCartCourses() {
   const { cart } = useSelector((state: RootState) => state.cart);
-  const dispatch = useDispatch<AppDispatch>(); // Use the correct type for AppDispatch from your store setup
+  const dispatch = useDispatch<any>(); // Use the correct type for AppDispatch from your store setup
 
   return (
     <div className="flex flex-1 flex-col">
-      {cart.map((course: Course, indx: number) => (
+      {cart.map((course : Course, indx : number) => (
         <div
           key={course._id}
           className={`flex w-full flex-wrap items-start justify-between gap-6 ${
@@ -52,9 +51,7 @@ export default function RenderCartCourses() {
                   value={course?.ratingAndReviews?.length}
                   size={20}
                   edit={false}
-                  activeColor="#ffd700"
-                  emptyIcon={<FaStar />}
-                  fullIcon={<FaStar />}
+                  color2={'#ffd700'}
                 />
                 <span className="text-richblack-400">
                   {course?.ratingAndReviews?.length} Ratings
@@ -77,5 +74,5 @@ export default function RenderCartCourses() {
         </div>
       ))}
     </div>
-  );
-}
+  )
+};
