@@ -16,6 +16,7 @@ import { ACCOUNT_TYPE } from "./utils/constants";
 import Contact from './pages/Contact';
 import MyProfile from './components/core/Dashboard/My-Profile'
 import Error from './pages/Error';
+import Settings from './components/core/Dashboard/Settings'
 
 
 function App() {
@@ -97,7 +98,7 @@ function App() {
         >
           <Route path="/dashboard/my-profile" element={<MyProfile />} />
          
-          {/* <Route path="/dashboard/Settings" element={<Settings />} /> */}
+          <Route path="/dashboard/Settings" element={<Settings />} />
 
 
           {/* {user?.accountType === ACCOUNT_TYPE.STUDENT && (
