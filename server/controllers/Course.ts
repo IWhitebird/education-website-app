@@ -10,7 +10,7 @@ export async function createCourse(req: AuthenticatedRequest, res: Response) {
 
         const userId = req.user.id;
 
-        let { courseName , courseDescription , whatYouWillLearn ,  coursePrice , courseCategory , tag: _tag , status ,  instructions: _instructions,} = req.body;
+        let { courseName , courseDescription , whatYouWillLearn ,  price , category , tag: _tag , status ,  instructions: _instructions,} = req.body;
         const thumbnail  = req.files.thumbnailImage;
         
         const tag = JSON.parse(_tag)
@@ -20,10 +20,10 @@ export async function createCourse(req: AuthenticatedRequest, res: Response) {
             !courseName ||
             !courseDescription ||
             !whatYouWillLearn ||
-            !coursePrice ||
+            !price ||
             !tag.length ||
             !thumbnail ||
-            !courseCategory ||
+            !category ||
             !instructions.length
           ) {
             return res.status(400).json({success : false , message: "Please enter all fields"});
@@ -41,7 +41,7 @@ export async function createCourse(req: AuthenticatedRequest, res: Response) {
             return res.status(400).json({success : false , message: "Instructor Details not found"});
         }
 
-        const categoryDetails = await Category.findById(courseCategory);
+        const categoryDetails = await Category.findById(category);
 
         if(!categoryDetails){
             return res.status(400).json({success : false , message: "Category Details not found"});
@@ -54,19 +54,19 @@ export async function createCourse(req: AuthenticatedRequest, res: Response) {
             courseDescription:courseDescription,
             whatYouWillLearn:whatYouWillLearn,
             instructor : instructorDetail._id,
-            price:coursePrice,
-            category:courseCategory._id,
+            price,
+            category:categoryDetails._id,
             thumbnail:thumbnailImageUpload.secure_url,
             status:status,
             instructions:instructions,
         });
 
-        const updateInstructor = await User.findByIdAndUpdate({_id:instructorDetail._id,},
+        await User.findByIdAndUpdate({_id:instructorDetail._id,},
            { $push : { courses : newCourse._id} } , {new:true},);
 
 
            const categoryDetails2 = await Category.findByIdAndUpdate(
-            { _id: courseCategory },
+            { _id: category },
             {
               $push: {
                 course: newCourse._id,
