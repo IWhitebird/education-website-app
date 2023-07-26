@@ -18,7 +18,7 @@ import SubSectionModal from "./SubSectionModal";
 interface Section {
   _id: string;
   sectionName: string;
-  subSection: SubSection[];
+  subSections: SubSection[];
 }
 
 interface SubSection {
@@ -52,16 +52,13 @@ export default function NestedView( {handleChangeEditSectionName }: {handleChang
   };
 
   const handleDeleteSubSection = async (subSectionId: string, sectionId: string) => {
-    console.log("goijraogqogqongonqr")
     const result = await deleteSubSection({ subSectionId, sectionId } , token);
-    console.log("wow1" , result);
     if (result) {
       // update the structure of the course
       const updatedCourseContent = course.courseContent?.map((section : Section) =>
         section._id === sectionId ? result : section
       );
       const updatedCourse = { ...course, courseContent: updatedCourseContent };
-      console.log("wow2" , updatedCourse);
       dispatch(setCourse(updatedCourse));
     }
     setConfirmationModal(null);
@@ -115,7 +112,7 @@ export default function NestedView( {handleChangeEditSectionName }: {handleChang
             </summary>
             <div className="px-6 pb-4">
               {/* Render All Sub Sections Within a Section */}
-              {section.subSection?.map((data: SubSection) => (
+              {section.subSections?.map((data: SubSection) => (
                 <div
                   key={data._id}
                   onClick={() => setViewSubSection(data)}
@@ -157,7 +154,7 @@ export default function NestedView( {handleChangeEditSectionName }: {handleChang
               ))}
               {/* Add New Lecture to Section */}
               <button
-                onClick={() => setAddSubsection(section._id)}
+                onClick={() => setAddSubsection({sectionId: section._id})}
                 className="mt-3 flex items-center gap-x-1 text-yellow-50"
               >
                 <FaPlus className="text-lg" />

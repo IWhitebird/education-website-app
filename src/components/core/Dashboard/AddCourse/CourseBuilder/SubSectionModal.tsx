@@ -12,13 +12,11 @@ import IconBtn from "../../../../common/IconBtn";
 import Upload from "../Upload";
 import { RootState } from "../../../../../reducers/reducer";
 
-
 interface Section {
     _id: string;
     sectionName: string;
-    subSection: SubSection[];
+    subSections: SubSection[];
   }
-
 
 interface SubSection {
   _id: string;
@@ -31,7 +29,7 @@ interface SubSection {
 interface ModalData extends SubSection {
     lectureTitle : string;
     lectureDesc : string;
-    lectureVideo : string;
+    lectureVideo : any;
 }
 
 export default function SubSectionModal({
@@ -58,7 +56,7 @@ export default function SubSectionModal({
     if (view || edit) {
       setValue("lectureTitle", modalData.title);
       setValue("lectureDesc", modalData.description);
-      setValue("lectureVideo", modalData.videoUrl);
+      setValue("lectureVideo", modalData.video);
     }
   }, [view, edit, modalData, setValue]);
 
@@ -68,7 +66,7 @@ export default function SubSectionModal({
     if (
       currentValues.lectureTitle !== modalData.title ||
       currentValues.lectureDesc !== modalData.description ||
-      currentValues.lectureVideo !== modalData.videoUrl
+      currentValues.lectureVideo !== modalData.video
     ) {
       return true;
     }
@@ -87,7 +85,7 @@ export default function SubSectionModal({
     if (currentValues.lectureDesc !== modalData.description) {
       formData.append("description", currentValues.lectureDesc);
     }
-    if (currentValues.lectureVideo !== modalData.videoUrl) {
+    if (currentValues.lectureVideo !== modalData.video) {
       formData.append("video", currentValues.lectureVideo);
     }
     setLoading(true);
@@ -103,7 +101,7 @@ export default function SubSectionModal({
     setLoading(false);
   };
 
-  const onSubmit = async (data: ModalData) => {
+  const onSubmit = async (data: any) => {
     if (view) return;
 
     if (edit) {
@@ -115,19 +113,22 @@ export default function SubSectionModal({
       return;
     }
 
-    const formData = new FormData();
-    formData.append("sectionId", modalData.sectionId);
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("video", data.videoUrl);
+    const myForm = new FormData();
+    console.log("modal data is :" , modalData);
+    console.log("data is :" , data);
+    myForm.append("sectionId", modalData.sectionId);
+    myForm.append("title", data.lectureTitle);
+    myForm.append("description", data.lectureDesc);
+    myForm.append("video", data.lectureVideo);
+    console.log("form data is :" , myForm);
     setLoading(true);
-    console.log("my form" ,formData)
-    const result = await createSubSection(formData, token);
+    const result = await createSubSection(myForm, token);
     if (result) {
       const updatedCourseContent = course.courseContent.map((section : Section) =>
         section._id === modalData.sectionId ? result : section
       );
       const updatedCourse = { ...course, courseContent: updatedCourseContent };
+      console.log(updatedCourse)
       dispatch(setCourse(updatedCourse));
     }
     setModalData(null);
@@ -156,8 +157,8 @@ export default function SubSectionModal({
             setValue={setValue}
             errors={errors}
             video={true}
-            viewData={view ? modalData.videoUrl : null}
-            editData={edit ? modalData.videoUrl : null}
+            viewData={view ? modalData.video : null}
+            editData={edit ? modalData.video : null}
           />
           {/* Lecture Title */}
           <div className="flex flex-col space-y-2">

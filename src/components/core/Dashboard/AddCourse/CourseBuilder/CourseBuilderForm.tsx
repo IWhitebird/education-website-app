@@ -34,7 +34,7 @@ export default function CourseBuilderForm() {
   const { course } = useSelector((state: RootState) => state.course);
   const { token } = useSelector((state: RootState) => state.auth);
   const [loading, setLoading] = useState<boolean>(false);
-  const [editSectionName, setEditSectionName] = useState<string | null>(null);
+  const [editSectionName, setEditSectionName] = useState<any>(null);
   const dispatch = useDispatch<any>();
 
   // handle form submission
@@ -93,7 +93,7 @@ export default function CourseBuilderForm() {
       toast.error("Please add at least one section");
       return;
     }
-    if (course.courseContent.some((section : any) => section.subSection.length === 0)) {
+    if (course.courseContent.some((section : any) => section.subSections.length === 0)) {
       toast.error("Please add at least one lecture in each section");
       return;
     }
