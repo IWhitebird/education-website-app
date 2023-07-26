@@ -1,21 +1,23 @@
-import { useEffect, useRef, useState } from "react";
-import { useDropzone, FileWithPath } from "react-dropzone"; // Add FileWithPath for typescript compatibility
-import { FiUploadCloud } from "react-icons/fi";
-import { useSelector } from "react-redux";
-import { Player } from "video-react";
+import { useEffect, useRef, useState } from "react"
+import { useDropzone } from "react-dropzone"
+import { FiUploadCloud } from "react-icons/fi"
+import { useSelector } from "react-redux"
 
-import "video-react/dist/video-react.css";
+import "video-react/dist/video-react.css"
+import { Player } from "video-react"
+
 
 interface UploadProps {
-  name: string;
-  label: string;
-  register: Function;
-  setValue: Function;
-  errors: { [key: string]: any }; // Adjust the error object type as per your use case
-  video?: boolean;
-  viewData?: any;
-  editData?: any;
+  name: string
+  label: string
+  register: Function
+  setValue: Function
+  errors: any
+  video?: boolean
+  viewData?: any
+  editData?: any
 }
+
 
 export default function Upload({
   name,
@@ -26,46 +28,46 @@ export default function Upload({
   video = false,
   viewData = null,
   editData = null,
-}: UploadProps): JSX.Element {
-  const { course } = useSelector((state: any) => state.course); // Adjust the state type as per your redux store
-  const [selectedFile, setSelectedFile] = useState<FileWithPath | null>(null); // Adjust the state type as per your use case
-  const [previewSource, setPreviewSource] = useState<string | ArrayBuffer | null>(
+} : UploadProps) {
+  const [selectedFile, setSelectedFile] = useState<any>(null)
+  const [previewSource, setPreviewSource] = useState<any>(
     viewData ? viewData : editData ? editData : ""
-  );
-  const inputRef = useRef<HTMLInputElement>(null);
+  )
+  const inputRef = useRef(null) 
 
-  const onDrop = (acceptedFiles: FileWithPath[]) => {
-    const file = acceptedFiles[0];
+  const onDrop = (acceptedFiles : File[]) => {
+    const file = acceptedFiles[0]
     if (file) {
-      previewFile(file);
-      setSelectedFile(file);
+      previewFile(file)
+      setSelectedFile(file)
     }
-  };
+  }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: video
+    accept: !video
       ? { "image/*": [".jpeg", ".jpg", ".png"] }
       : { "video/*": [".mp4"] },
     onDrop,
-  });
+  })
 
-  const previewFile = (file: FileWithPath) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
+  const previewFile = (file : File) => {
+    // console.log(file)
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
     reader.onloadend = () => {
-      setPreviewSource(reader.result);
-    };
-  };
+      setPreviewSource(reader.result)
+    }
+  }
 
   useEffect(() => {
-    register(name, { required: true });
+    register(name, { required: true })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [register]);
+  }, [register])
 
   useEffect(() => {
-    setValue(name, selectedFile);
+    setValue(name, selectedFile)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedFile, setValue]);
+  }, [selectedFile, setValue])
 
   return (
     <div className="flex flex-col space-y-2">
@@ -81,20 +83,20 @@ export default function Upload({
           <div className="flex w-full flex-col p-6">
             {!video ? (
               <img
-                src={previewSource as string}
+                src={previewSource}
                 alt="Preview"
                 className="h-full w-full rounded-md object-cover"
               />
             ) : (
-              <Player aspectRatio="16:9" playsInline src={previewSource as string} />
+              <Player aspectRatio="16:9" playsInline src={previewSource} />
             )}
             {!viewData && (
               <button
                 type="button"
                 onClick={() => {
-                  setPreviewSource("");
-                  setSelectedFile(null);
-                  setValue(name, null);
+                  setPreviewSource("")
+                  setSelectedFile(null)
+                  setValue(name, null)
                 }}
                 className="mt-3 text-richblack-400 underline"
               >
@@ -129,5 +131,5 @@ export default function Upload({
         </span>
       )}
     </div>
-  );
+  )
 }

@@ -27,10 +27,10 @@ interface SubSection {
 }
 
 
-export default function NestedView( {handleChangeEditSectionName }: {handleChangeEditSectionName :Function}  ) {
+export default function NestedView( {handleChangeEditSectionName }: {handleChangeEditSectionName : Function}  ) {
   const { course } = useSelector((state : RootState) => state.course);
   const { token } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
 
   // States to keep track of mode of modal [add, view, edit]
   const [addSubSection, setAddSubsection] = useState<any>(null);
@@ -55,7 +55,7 @@ export default function NestedView( {handleChangeEditSectionName }: {handleChang
     const result = await deleteSubSection({ subSectionId, sectionId } , token);
     if (result) {
       // update the structure of the course
-      const updatedCourseContent = course.courseContent.map((section : Section) =>
+      const updatedCourseContent = course.courseContent?.map((section : Section) =>
         section._id === sectionId ? result : section
       );
       const updatedCourse = { ...course, courseContent: updatedCourseContent };
@@ -112,7 +112,7 @@ export default function NestedView( {handleChangeEditSectionName }: {handleChang
             </summary>
             <div className="px-6 pb-4">
               {/* Render All Sub Sections Within a Section */}
-              {section.subSection.map((data: SubSection) => (
+              {section.subSection?.map((data: SubSection) => (
                 <div
                   key={data._id}
                   onClick={() => setViewSubSection(data)}

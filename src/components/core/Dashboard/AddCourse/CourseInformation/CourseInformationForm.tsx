@@ -49,17 +49,19 @@ export default function CourseInformationForm() {
   const { token } = useSelector((state : RootState) => state.auth)
   const { course, editCourse } = useSelector((state : RootState) => state.course)
   const [loading, setLoading] = useState(false)
-  const [courseCategories, setCourseCategories] = useState<ICourseCategory[]>([])
+  const [courseCategories, setCourseCategories] = useState<any>()
+
 
   useEffect(() => {
     const getCategories = async () => {
       setLoading(true)
       const categories = await fetchCourseCategories()
-      if (categories.length > 0) {
-        // console.log("categories", categories)
-        setCourseCategories(categories)
+      // console.log("categories", categories)
+      if (categories?.allCategory?.length > 0) {
+        setCourseCategories(categories.allCategory)
       }
       setLoading(false)
+      console.log(courseCategories)
     }
     // if form is in edit mode
     if (editCourse) {
@@ -99,7 +101,7 @@ export default function CourseInformationForm() {
 
   //   handle next button click
   const onSubmit = async (data : any) => {
-    // console.log(data)
+    console.log(data)
 
     if (editCourse) {
       // const currentValues = getValues()
@@ -254,9 +256,9 @@ export default function CourseInformationForm() {
             Choose a Category
           </option>
           {!loading &&
-            courseCategories?.map((category , indx : number) => (
+            courseCategories?.map((category : any , indx : number) => (
               <option key={indx} value={category?._id}>
-                {category?.name}
+                {category.name}
               </option>
             ))}
         </select>

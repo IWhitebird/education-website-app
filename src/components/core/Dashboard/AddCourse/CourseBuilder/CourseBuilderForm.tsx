@@ -43,6 +43,8 @@ export default function CourseBuilderForm() {
 
     let result;
 
+    console.log();
+
     if (editSectionName) {
       result = await updateSection(
         {
@@ -62,9 +64,12 @@ export default function CourseBuilderForm() {
       );
     }
     if (result) {
+      console.log("i am donee" , result)
+      console.log("before" , course);
       dispatch(setCourse(result));
       setEditSectionName(null);
       setValue("sectionName", "");
+      console.log("fatrha" , course);
     }
     setLoading(false);
   };

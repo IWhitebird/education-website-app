@@ -10,7 +10,7 @@ export async function createCourse(req: AuthenticatedRequest, res: Response) {
 
         const userId = req.user.id;
 
-        let { courseName , courseDescription , whatYouWillLearn ,  price , category , tag: _tag , status ,  instructions: _instructions,} = req.body;
+        let { courseName , courseDescription , whatYouWillLearn ,  price , category , tag: _tag  ,  instructions: _instructions,} = req.body;
         const thumbnail  = req.files.thumbnailImage;
         
         const tag = JSON.parse(_tag)
@@ -28,6 +28,8 @@ export async function createCourse(req: AuthenticatedRequest, res: Response) {
           ) {
             return res.status(400).json({success : false , message: "Please enter all fields"});
         }
+
+        let status = req.body.status;
 
         if (!status || status === undefined) {
             status = "draft"
@@ -57,7 +59,7 @@ export async function createCourse(req: AuthenticatedRequest, res: Response) {
             price,
             category:categoryDetails._id,
             thumbnail:thumbnailImageUpload.secure_url,
-            status:status,
+            status,
             instructions:instructions,
         });
 

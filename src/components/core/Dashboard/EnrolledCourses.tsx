@@ -12,12 +12,7 @@ interface EnrolledCourse {
   thumbnail: string;
   courseName: string;
   courseDescription: string;
-  courseContent: {
-    _id: string;
-    subSection?: {
-      _id: string;
-    }[];
-  };
+  courseContent: any;
   totalDuration: string;
   progressPercentage: number;
 }
