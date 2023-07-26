@@ -49,7 +49,7 @@ export default function SubSectionModal({
     getValues,
   } = useForm<ModalData>();
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<any>();
   const [loading, setLoading] = useState(false);
   const { token } = useSelector((state : RootState) => state.auth);
   const { course } = useSelector((state: RootState) => state.course);
@@ -121,6 +121,7 @@ export default function SubSectionModal({
     formData.append("description", data.description);
     formData.append("video", data.videoUrl);
     setLoading(true);
+    console.log("my form" ,formData)
     const result = await createSubSection(formData, token);
     if (result) {
       const updatedCourseContent = course.courseContent.map((section : Section) =>
@@ -155,8 +156,8 @@ export default function SubSectionModal({
             setValue={setValue}
             errors={errors}
             video={true}
-            viewData={view ? modalData.videoUrl : undefined}
-            editData={edit ? modalData.videoUrl : undefined}
+            viewData={view ? modalData.videoUrl : null}
+            editData={edit ? modalData.videoUrl : null}
           />
           {/* Lecture Title */}
           <div className="flex flex-col space-y-2">

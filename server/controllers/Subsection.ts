@@ -8,7 +8,7 @@ export const createSubSection = async (req: AuthenticatedRequest, res: Response)
     try{
         const {title , description, sectionId} = req.body;
 
-        const video = req.files.videoFile;
+        const video = req.files.video;
 
         if(!title || !description || !video || !sectionId){
             return res.status(400).json({success:false ,message: "Please enter all the fields"});
@@ -30,13 +30,13 @@ export const createSubSection = async (req: AuthenticatedRequest, res: Response)
         return res.status(200).json({
             success: true ,
             message: "Sub Section created successfully" ,
-            updateSection
+            data : updateSection
         });
 
     }
     catch(error){
         console.log(error);
-        res.status(500).json({success:false, message: "Internal server error in createSubSection"});
+        return res.status(500).json({success:false, message: "Internal server error in createSubSection"});
     }
 };
 

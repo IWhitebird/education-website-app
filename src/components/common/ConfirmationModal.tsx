@@ -6,15 +6,12 @@ interface ModalData {
   text2: string;
   btn1Text: string;
   btn2Text: string;
-  btn1Handler: () => void;
-  btn2Handler: () => void;
+  btn1Handler: any;
+  btn2Handler: any;
 }
 
-interface IConfirmationModalProps {
-  modalData: ModalData;
-}
 
-const ConfirmationModal: React.FC<IConfirmationModalProps> = ({ modalData }) => {
+const ConfirmationModal = ({ modalData } : {modalData : ModalData}) => {
   return (
     <div className="fixed inset-0 z-[1000] !mt-0 grid place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
       <div className="w-11/12 max-w-[350px] rounded-lg border border-richblack-400 bg-richblack-800 p-6">
@@ -25,10 +22,10 @@ const ConfirmationModal: React.FC<IConfirmationModalProps> = ({ modalData }) => 
           {modalData?.text2}
         </p>
         <div className="flex items-center gap-x-4">
-          <IconBtn onclick={modalData?.btn1Handler} text={modalData?.btn1Text} />
+          <IconBtn onclick={modalData.btn1Handler} text={modalData?.btn1Text} />
           <button
             className="cursor-pointer rounded-md bg-richblack-200 py-[8px] px-[20px] font-semibold text-richblack-900"
-            onClick={modalData?.btn2Handler}
+            onClick={modalData.btn2Handler}
           >
             {modalData?.btn2Text}
           </button>

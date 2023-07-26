@@ -27,7 +27,7 @@ interface SubSection {
 }
 
 
-export default function NestedView( {handleChangeEditSectionName }: {handleChangeEditSectionName : Function}  ) {
+export default function NestedView( {handleChangeEditSectionName }: {handleChangeEditSectionName : any}  ) {
   const { course } = useSelector((state : RootState) => state.course);
   const { token } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<any>();
@@ -52,13 +52,16 @@ export default function NestedView( {handleChangeEditSectionName }: {handleChang
   };
 
   const handleDeleteSubSection = async (subSectionId: string, sectionId: string) => {
+    console.log("goijraogqogqongonqr")
     const result = await deleteSubSection({ subSectionId, sectionId } , token);
+    console.log("wow1" , result);
     if (result) {
       // update the structure of the course
       const updatedCourseContent = course.courseContent?.map((section : Section) =>
         section._id === sectionId ? result : section
       );
       const updatedCourse = { ...course, courseContent: updatedCourseContent };
+      console.log("wow2" , updatedCourse);
       dispatch(setCourse(updatedCourse));
     }
     setConfirmationModal(null);
@@ -99,8 +102,8 @@ export default function NestedView( {handleChangeEditSectionName }: {handleChang
                       text2: "All the lectures in this section will be deleted",
                       btn1Text: "Delete",
                       btn2Text: "Cancel",
-                      btn1Handler: () => handleDeleteSection(section._id),
-                      btn2Handler: () => setConfirmationModal(null),
+                      btn1Handler: function(){handleDeleteSection(section._id)} ,
+                      btn2Handler:function(){setConfirmationModal(null)},
                     })
                   }
                 >
@@ -142,8 +145,7 @@ export default function NestedView( {handleChangeEditSectionName }: {handleChang
                           text2: "This lecture will be deleted",
                           btn1Text: "Delete",
                           btn2Text: "Cancel",
-                          btn1Handler: () =>
-                            handleDeleteSubSection(data._id, section._id),
+                          btn1Handler: () => handleDeleteSubSection(data._id, section._id),
                           btn2Handler: () => setConfirmationModal(null),
                         })
                       }

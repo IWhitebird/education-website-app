@@ -152,7 +152,7 @@ export const createSection = async (data : any, token : any) => {
 }
 
 // create a subsection
-export const createSubSection = async (data : FormData, token : any) => {
+export const createSubSection = async (data : any, token : any) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
@@ -164,6 +164,7 @@ export const createSubSection = async (data : FormData, token : any) => {
       throw new Error("Could Not Add Lecture")
     }
     toast.success("Lecture Added")
+    console.log(response);
     result = response?.data?.data
   } catch (error: any) {
     console.log("CREATE SUB-SECTION API ERROR............", error)
@@ -196,7 +197,7 @@ export const updateSection = async (data : any, token : any) => {
 }
 
 // update a subsection
-export const updateSubSection = async (data : FormData, token : any) => {
+export const updateSubSection = async (data : any, token : any) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
