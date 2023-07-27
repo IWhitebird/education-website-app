@@ -163,7 +163,7 @@ export async function getCourseDetails(req: Request, res: Response) {
 export async function editCourse(req: AuthenticatedRequest, res: Response) {
     try {
       const { courseId } = req.body;
-      const updates: any = req.body; // Replace 'any' with a more specific type if possible
+      const updates = req.body; 
       const course = await Course.findById(courseId) as any;
   
       if (!course) {
@@ -204,11 +204,11 @@ export async function editCourse(req: AuthenticatedRequest, res: Response) {
           },
         })
         .populate("category")
-        .populate("ratingAndReviews")
+        .populate("ratingAndReview")
         .populate({
           path: "courseContent",
           populate: {
-            path: "subSection",
+            path: "subSections",
           },
         })
         .exec();
@@ -242,11 +242,11 @@ export async function getFullCourseDetails(req: AuthenticatedRequest, res: Respo
             },
           })
           .populate("category")
-          .populate("ratingAndReviews")
+          .populate("ratingAndReview")
           .populate({
             path: "courseContent",
             populate: {
-              path: "subSection",
+              path: "subSections",
             },
           })
           .exec()
