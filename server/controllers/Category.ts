@@ -58,13 +58,29 @@ export async function showAllCategory(req: Request, res: Response) {
 export async function categoryPageDetails(req: Request, res: Response) {
   try {
     const { categoryId } = req.body;
-    const selectedCategory = await Category.findById(categoryId)
-      .populate({
-        path: "course",
-        match: { status: "published" },
-        populate: "ratingAndReview",
-      })
-      .exec();
+
+    // const selectedCategory = await Category.findById(categoryId)
+    //   .populate({
+    //     path: "course",
+    //     match: { status: "published" },
+    //     populate: "ratingAndReview",
+    //   })
+    //   .exec();
+
+      const selectedCategory = await Category.findById(categoryId)
+    .populate({
+      path: "course",
+      match: { status: "published" },
+      populate: [
+        {
+          path: "ratingAndReview",
+        },
+        {
+          path: "instructor",
+        },
+      ],
+    });
+
 
     if (selectedCategory?.course.length === 0) {
       console.log("No courses found for the selected category.");
@@ -85,6 +101,9 @@ export async function categoryPageDetails(req: Request, res: Response) {
         .populate({
           path: "course",
           match: { status: "published" },
+          populate: {
+            path : "instructor",
+          }
         })
         .exec()
       console.log()
@@ -93,6 +112,9 @@ export async function categoryPageDetails(req: Request, res: Response) {
       .populate({
         path: "course",
         match: { status: "published" },
+        populate: {
+          path : "instructor",
+        }
       })
       .exec()
 

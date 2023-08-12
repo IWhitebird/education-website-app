@@ -55,7 +55,6 @@ function Catalog() {
     return <Error />;
   }
 
-
   return (
     <>
       {/* Hero Section */}

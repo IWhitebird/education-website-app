@@ -16,6 +16,7 @@ function Course_Card({ course , Height } : { course : any, Height : string }) {
     setAvgReviewCount(count)
   }, [course])
   // console.log("count............", avgReviewCount)
+  console.log(course);
 
   return (
     <>
@@ -37,12 +38,10 @@ function Course_Card({ course , Height } : { course : any, Height : string }) {
               <span className="text-yellow-5">{avgReviewCount || 0}</span>
               {/* <ReactStars
                 count={5}
-                value={avgReviewCount || 0}
                 size={20}
+                value={avgReviewCount || 0}
                 edit={false}
-                activeColor="#ffd700"
-                emptyIcon={<FaRegStar />}
-                fullIcon={<FaStar />}
+                color2="#ffd700"
               /> */}
               <RatingStars Review_Count={avgReviewCount} Star_Size={20} />
               <span className="text-richblack-400">
