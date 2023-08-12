@@ -62,6 +62,7 @@ export const fetchCourseDetails = async (courseId : any) => {
   }
   toast.dismiss(toastId)
   //   dispatch(setLoading(false));
+  console.log(result)
   return result
 }
 
