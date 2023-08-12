@@ -1,53 +1,45 @@
-import React, { useEffect, useState } from "react";
-import Swiper from 'swiper';
-import 'swiper/css';
-import 'swiper/css/free-mode';
-import 'swiper/css/pagination';
-import Course_Card from "./Course_Card";
-import { SwiperOptions } from "swiper/types/swiper-options";
+import React, { useEffect, useState } from "react"
+// Import Swiper React components
+import { Swiper, SwiperSlide  } from "swiper/react"
 
-function Course_Slider({ Courses }: { Courses: any[] }) {
-  useEffect(() => {
-    const swiperParams : SwiperOptions = {
-      slidesPerView: 1,
-      spaceBetween: 25,
-      loop: true,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-      freeMode: true,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      breakpoints: {
-        1024: {
-          slidesPerView: 3,
-        },
-      },
-    };
+// Import Swiper styles
+import "swiper/css"
+import "swiper/css/free-mode"
+import "swiper/css/pagination"
+// import "../../.."
+// Import required modules
+import { FreeMode, Pagination } from "swiper"
 
-   new Swiper('.swiper', swiperParams);
-  }, []);
+// import { getAllCourses } from "../../services/operations/courseDetailsAPI"
+import Course_Card from "./Course_Card"
 
+function Course_Slider({ Courses } : { Courses: any }) {
   return (
     <>
       {Courses?.length ? (
-        <div className="swiper-container swiper max-h-[30rem]">
-          <div className="swiper-wrapper">
-            {Courses.map((course: any, i: number) => (
-              <div className="swiper-slide" key={i}>
-                <Course_Card course={course} Height={"h-[250px]"} />
-              </div>
-            ))}
-          </div>
-        </div>
+        <Swiper
+          slidesPerView={3}
+          spaceBetween={25}
+          loop={true}
+          modules={[FreeMode, Pagination]}
+          breakpoints={{
+            1024: {
+              slidesPerView: 3,
+            },
+          }}
+          className="max-h-[30rem]"
+        >
+          {Courses?.map((course : any, i : any) => (
+            <SwiperSlide key={i}>
+              <Course_Card course={course} Height={"h-[250px]"} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       ) : (
         <p className="text-xl text-richblack-5">No Course Found</p>
       )}
     </>
-  );
+  )
 }
 
-export default Course_Slider;
+export default Course_Slider
