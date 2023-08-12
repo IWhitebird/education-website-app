@@ -13,6 +13,8 @@ interface IUser extends mongoose.Document {
     token: string;
     resetPasswordExpires: number;
     contactNumber: string;
+    active: boolean;
+    approved: boolean;
 }
 
 
@@ -37,6 +39,14 @@ const userSchema = new mongoose.Schema<IUser>({
         type: String,
         required: true,
     },
+    active: {
+        type: Boolean,
+        default: true,
+      },
+    approved: {
+        type: Boolean,
+        default: true,
+      },   
     accountType :{
         type: String,
         enum: ["Admin" , "Student", "Instructor"],
@@ -72,6 +82,7 @@ const userSchema = new mongoose.Schema<IUser>({
     contactNumber : {
         type: String,
     },
-});
+
+} ,  { timestamps: true });
 
 export default mongoose.model<IUser>("User", userSchema);

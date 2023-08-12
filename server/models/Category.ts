@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 interface ICategory extends mongoose.Document {
     name : string;
     description : string;
-    course : mongoose.Schema.Types.ObjectId;
+    course : mongoose.Schema.Types.ObjectId[];
 }
 
 

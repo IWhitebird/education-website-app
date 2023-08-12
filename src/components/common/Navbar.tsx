@@ -25,7 +25,7 @@ function Navbar() {
   const { totalItems } = useSelector((state : RootState) => state.cart);
   const location = useLocation();
 
-  const [subLinks, setSubLinks] = useState<any[]>([]);
+  const [subLinks, setSubLinks] = useState<any[]>();
   const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
@@ -43,7 +43,6 @@ function Navbar() {
       fetchData();
     }, []);
 
-    console.log("my links " , subLinks);
 
   const matchRoute = (route : any) => {
     return matchPath({ path: route }, location.pathname);
@@ -71,11 +70,11 @@ function Navbar() {
                         <div className="absolute left-[50%] top-0 -z-10 h-6 w-6 translate-x-[80%] translate-y-[-40%] rotate-45 select-none rounded bg-richblack-5"></div>
                         {loading ? (
                           <p className="text-center">Loading...</p>
-                        ) : subLinks.length ? (
+                        ) : subLinks?.length ? (
                           <>
                             {subLinks
-                              ?.filter((subLink) => subLink?.course?.length > 0)
-                              ?.map((subLink, index) => (
+                              ?.filter((subLink : any) => subLink?.course?.length > 0)
+                              ?.map((subLink : any, index : number) => (
                                 <Link
                                   to={`/catalog/${subLink.name
                                     .split(" ")

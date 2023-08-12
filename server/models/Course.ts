@@ -14,6 +14,7 @@ interface ICourse extends Document {
   studentsEnrolled: mongoose.Schema.Types.ObjectId[];
   instructions: string[];
   status: string;
+  createdAt: Date;
 }
 
 const courseSchema: Schema<ICourse> = new Schema<ICourse>({
@@ -71,6 +72,7 @@ const courseSchema: Schema<ICourse> = new Schema<ICourse>({
       type: String,
       enum: ["draft", "published"],
     },
+    createdAt: { type: Date, default: Date.now },
 });
 
 export default mongoose.model<ICourse>("Course", courseSchema);

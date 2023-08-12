@@ -28,7 +28,7 @@ export default function RenderSteps() {
   return (
     <>
       <div className="relative mb-2 flex w-full justify-center">
-        {steps.map((item) => (
+        {steps.map((item , index) => (
           <>
             <div
               className="flex flex-col items-center "

@@ -25,6 +25,7 @@ import { RootState } from './reducers/reducer';
 import AddCourse from './components/core/Dashboard/AddCourse';
 import MyCourses from './components/core/Dashboard/MyCourses';
 import EditCourse from './components/core/Dashboard/EditCourse';
+import Catalog from './pages/Catalog';
 
 
 
@@ -40,6 +41,7 @@ function App() {
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar/>
       <Routes>
+
 
         <Route path="/" element={<Home/>} />
 
@@ -101,6 +103,13 @@ function App() {
           element={
             <Contact/>
           }
+        />
+
+        <Route 
+          path="catalog/:catalogName" 
+          element={
+            <Catalog />
+          } 
         />
 
 

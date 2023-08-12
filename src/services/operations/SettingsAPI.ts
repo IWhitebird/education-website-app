@@ -26,7 +26,6 @@ export function updateDisplayPicture(token : any, formData: FormData) {
         throw new Error(response.data.message);
       }
       toast.success("Display Picture Updated Successfully");
-      console.log(response);
       dispatch(setUser(response.data.data));
     } catch (error) {
       console.log("UPDATE_DISPLAY_PICTURE_API API ERROR............", error);
@@ -48,7 +47,6 @@ export function updateProfile(token: any, formData: FormData) {
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
-      console.log(response);
       const userImage = response.data.updatedUserDetails.image
         ? response.data.updatedUserDetails.image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`;
