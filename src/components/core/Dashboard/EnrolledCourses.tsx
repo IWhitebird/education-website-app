@@ -7,21 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { getUserEnrolledCourses } from "../../../services/operations/profileAPI";
 import { RootState } from "../../../reducers/reducer";
 
-interface EnrolledCourse {
-  _id: string;
-  thumbnail: string;
-  courseName: string;
-  courseDescription: string;
-  courseContent: any;
-  totalDuration: string;
-  progressPercentage: number;
-}
 
 export default function EnrolledCourses() {
   const { token } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
 
-  const [enrolledCourses, setEnrolledCourses] = useState<EnrolledCourse[]>([]);
+  const [enrolledCourses, setEnrolledCourses] = useState<any>([]);
 
   const getEnrolledCourses = async () => {
     try {
@@ -35,6 +26,8 @@ export default function EnrolledCourses() {
   useEffect(() => {
     getEnrolledCourses();
   }, []);
+
+  console.log(enrolledCourses)
 
   return (
     <>
@@ -57,7 +50,7 @@ export default function EnrolledCourses() {
             <p className="flex-1 px-2 py-3">Progress</p>
           </div>
           {/* Course Names */}
-          {enrolledCourses.map((course, i, arr) => (
+          {enrolledCourses.map((course : any, i : number, arr : any) => (
             <div
               className={`flex items-center border border-richblack-700 ${
                 i === arr.length - 1 ? "rounded-b-lg" : "rounded-none"
@@ -66,13 +59,13 @@ export default function EnrolledCourses() {
             >
               <div
                 className="flex w-[45%] cursor-pointer items-center gap-4 px-5 py-3"
-                // onClick={() => {
-                //   navigate(
-                //     `/view-course/${course._id}/section/${course.courseContent?.[0]?._id}/sub-section/${
-                //       course.courseContent?.[0]?.subSections?.[0]?._id
-                //     }`
-                //   );
-                // }}
+                onClick={() => {
+                  navigate(
+                    `/view-course/${course._id}/section/${course.courseContent?.[0]?._id}/sub-section/${
+                      course.courseContent?.[0]?.subSections?.[0]?._id
+                    }`
+                  );
+                }}
               >
                 <img
                   src={course.thumbnail}

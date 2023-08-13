@@ -4,6 +4,8 @@ import { AuthenticatedRequest } from "../middlewares/auth";
 import User from "../models/User";
 import { get } from "http";
 import { UploadToCloudinary } from "../utils/imageUploader";
+import convertSecondsToDuration from "../utils/secToDuration";
+import CourseProgress from "../models/CourseProgress";
 
 export const updateProfile = async (req : AuthenticatedRequest, res : Response) => {
     try{
@@ -107,26 +109,69 @@ export const updateDisplayPicture = async (req : AuthenticatedRequest, res : Res
 };
 
 export const getEnrolledCourses = async (req : AuthenticatedRequest, res : Response) => {
-    try{
-        const userId = req.user.id;
-        const userDetails = await User.findById(userId)
-        .populate("courses")
-        .exec();
-    
-        if(!userDetails){
-            return res.status(400).json({success:false, 
-                message: "User not found to get enrolled courses"});
+    try {
+        const userId = req.user.id
+        let userDetails : any = await User.findOne({
+          _id: userId,
+        })
+          .populate({
+            path: "courses",
+            populate: {
+              path: "courseContent",
+              populate: {
+                path: "subSections",
+              },
+            },
+          })
+          .exec()
+        userDetails = userDetails!.toObject()
+        var SubsectionLength = 0
+        for (var i = 0; i < userDetails.courses.length; i++) {
+          let totalDurationInSeconds = 0
+          SubsectionLength = 0
+          for (var j = 0; j < userDetails.courses[i].courseContent.length; j++) {
+            totalDurationInSeconds += userDetails.courses[i].courseContent[
+              j
+            ].subSections.reduce((acc : any, curr : any) => acc + parseInt(curr.timeDuration), 0)
+            userDetails.courses[i].totalDuration = convertSecondsToDuration(
+              totalDurationInSeconds
+            )
+            SubsectionLength +=
+              userDetails.courses[i].courseContent[j].subSections.length
+          }
+          let courseProgressCount : any = await CourseProgress.findOne({
+            courseID: userDetails.courses[i]._id,
+            userId: userId,
+          })
+          courseProgressCount = courseProgressCount?.completedVideos.length
+          if (SubsectionLength === 0) {
+            userDetails.courses[i].progressPercentage = 100
+          } else {
+            // To make it up to 2 decimal point
+            const multiplier = Math.pow(10, 2)
+            userDetails.courses[i].progressPercentage =
+              Math.round(
+                (courseProgressCount / SubsectionLength) * 100 * multiplier
+              ) / multiplier
+          }
         }
-
-        res.status(200).json({success:true, 
-            message: "Enrolled courses fetched successfully" , 
-            data : userDetails.courses});
-
-    }
-    catch(error){
-        console.log(error);
-        res.status(500).json({success:false, message: "Internal server error in getEnrolledCourses"});
-    }
+    
+        if (!userDetails) {
+          return res.status(400).json({
+            success: false,
+            message: `Could not find user with id: ${userDetails}`,
+          })
+        }
+        return res.status(200).json({
+          success: true,
+          data: userDetails.courses,
+        })
+      } catch (error) {
+        return res.status(500).json({
+          success: false,
+          error
+        })
+      }
 };
 
 
