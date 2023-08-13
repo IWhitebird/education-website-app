@@ -129,18 +129,15 @@ function App() {
             </PrivateRoute>   
           }
         >
+
           <Route path="/dashboard/my-profile" element={<MyProfile />} />
-         
           <Route path="/dashboard/Settings" element={<Settings />} />
 
 
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
               <Route path="/dashboard/cart" element={<Cart />} />
-              <Route
-                path="/dashboard/enrolled-courses"
-                element={<EnrolledCourses />}
-              />
+              <Route path="/dashboard/enrolled-courses" element={<EnrolledCourses />}/>
             </>
           )}
 
@@ -148,10 +145,7 @@ function App() {
             <>
               <Route path="/dashboard/add-course" element={<AddCourse />} />
               <Route path="/dashboard/my-courses" element={<MyCourses />} />
-              <Route
-                path="/dashboard/edit-course/:courseId"
-                element={<EditCourse />}
-              />
+              <Route path="/dashboard/edit-course/:courseId"element={<EditCourse />} />
             </>
           )}
 

@@ -1,4 +1,4 @@
-const paymentSuccessEmail = (name : string, amount : string, orderId : string, paymentId : string) => {
+const paymentSuccessEmail = (name : string, amount : any, orderId : string, paymentId : string) => {
     return `<!DOCTYPE html>
       <html>
       

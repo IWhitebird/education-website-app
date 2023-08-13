@@ -44,8 +44,8 @@ function CourseDetails() {
       }
     })()
   }, [courseId])
+  console.log("res" , response)
 
-  // console.log("response: ", response)
 
   // Calculating Avg Review count
   const [avgReviewCount, setAvgReviewCount] = useState(0)
@@ -53,7 +53,7 @@ function CourseDetails() {
     const count = GetAvgRating(response?.data?.courseDetails.ratingAndReviews)
     setAvgReviewCount(count)
   }, [response])
-  // console.log("avgReviewCount: ", avgReviewCount)
+  console.log("avgReviewCount: ", avgReviewCount)
 
   // // Collapse all
   // const [collapse, setCollapse] = useState("")
@@ -72,7 +72,7 @@ function CourseDetails() {
   useEffect(() => {
     let lectures = 0
     response?.data?.courseDetails?.courseContent?.forEach((sec : any) => {
-      lectures += sec.subSection.length || 0
+      lectures += sec.subSections?.length || 0
     })
     setTotalNoOfLectures(lectures)
   }, [response])
@@ -89,16 +89,16 @@ function CourseDetails() {
   }
 
   const {
-    _id: course_id,
+    _id,
     courseName,
     courseDescription,
     thumbnail,
     price,
     whatYouWillLearn,
     courseContent,
-    ratingAndReviews,
+    ratingAndReview,
     instructor,
-    studentsEnroled,
+    studentsEnrolled,
     createdAt,
   } = response.data?.courseDetails
 
@@ -118,7 +118,6 @@ function CourseDetails() {
   }
 
   if (paymentLoading) {
-    // console.log("payment loading")
     return (
       <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
         <div className="spinner"></div>
@@ -152,8 +151,8 @@ function CourseDetails() {
               <div className="text-md flex flex-wrap items-center gap-2">
                 <span className="text-yellow-25">{avgReviewCount}</span>
                 <RatingStars Review_Count={avgReviewCount} Star_Size={24} />
-                <span>{`(${ratingAndReviews.length} reviews)`}</span>
-                <span>{`${studentsEnroled.length} students enrolled`}</span>
+                <span>{`(${ratingAndReview.length} reviews)`}</span>
+                <span>{`${studentsEnrolled.length} students enrolled`}</span>
               </div>
               <div>
                 <p className="">
@@ -200,7 +199,6 @@ function CourseDetails() {
               <ReactMarkdown>{whatYouWillLearn}</ReactMarkdown>
             </div>
           </div>
-
           {/* Course Content Section */}
           <div className="max-w-[830px] ">
             <div className="flex flex-col gap-3">

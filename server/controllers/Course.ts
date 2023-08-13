@@ -125,7 +125,8 @@ export async function getAllCourses(req: Request, res: Response) {
 export async function getCourseDetails(req: Request, res: Response) {
     try{
         const { courseId } = req.body;
-        const courseDetails = await Course.find({_id:courseId})
+
+        const tempRes : any = await Course.find({_id:courseId})
         .populate({
             path: "instructor",
             populate: {
@@ -142,23 +143,38 @@ export async function getCourseDetails(req: Request, res: Response) {
             }
         }).exec();
 
+        const courseDetails = tempRes[0];
+
         if(!courseDetails){
             return res.status(400).json({success : false , message: "Course not found"});
         }
 
-        res.status(200).json({
-            success: true,
-            message: "Course details retrieved successfully",
+
+        let totalDurationInSeconds = 0
+        courseDetails.courseContent.forEach((content : any) => {
+          content.subSections.forEach((subSection : any) => {
+            const timeDurationInSeconds = parseInt(subSection.timeDuration)
+            totalDurationInSeconds += timeDurationInSeconds
+          })
+        })
+    
+        const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
+    
+        return res.status(200).json({
+          success: true,
+          data: {
             courseDetails,
-        });
-
-    }
-    catch(error){
-        console.log(error);
-        res.status(500).json({success : false , message: "Internal server error in getCourseDetails"});
-    }
-
-};
+            totalDuration,
+          },
+        })
+      } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+          success: false,
+          error
+        })
+      }
+}
 
 export async function editCourse(req: AuthenticatedRequest, res: Response) {
     try {

@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from "react"
+import { AiOutlineDown } from "react-icons/ai"
+import { HiOutlineVideoCamera } from "react-icons/hi"
 
-const CourseSubSectionAccordion = () => {
+function CourseSubSectionAccordion({ subSec } : {subSec : any}) {
   return (
-    <div>CourseSubSectionAccordion</div>
+    <div>
+      <div className="flex justify-between py-2">
+        <div className={`flex items-center gap-2`}>
+          <span>
+            <HiOutlineVideoCamera />
+          </span>
+          <p>{subSec?.title}</p>
+        </div>
+      </div>
+    </div>
   )
 }
 
