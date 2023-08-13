@@ -67,14 +67,15 @@ export async function BuyCourse(
     if (!orderResponse.data.success) {
       throw new Error(orderResponse.data.message)
     }
-    console.log("PAYMENT RESPONSE FROM BACKEND............", orderResponse.data)
+    console.log("PAYMENT RESPONSE FROM BACKEND............", orderResponse)
+
 
     // Opening the Razorpay SDK
     const options  = {
       key: process.env.RAZORPAY_KEY,
-      currency: orderResponse.data.data.currency,
-      amount: `${orderResponse.data.data.amount}`,
-      order_id: orderResponse.data.data.id,
+      currency: orderResponse.data.paymentResponse.currency,
+      amount: `${orderResponse.data.paymentResponse.amount}`,
+      order_id: orderResponse.data.paymentResponse.id,
       name: "Kourse",
       description: "Thank you for Purchasing the Course.",
       image: rzpLogo,
@@ -83,8 +84,8 @@ export async function BuyCourse(
         email: user_details.email,
       },
       handler: function (response : any) {
-        sendPaymentSuccessEmail(response, orderResponse.data.data.amount, token)
         verifyPayment({ ...response, courses }, token, navigate, dispatch)
+        sendPaymentSuccessEmail(response, orderResponse?.data?.paymentResponse.amount, token)
       },
     }
 
@@ -104,7 +105,7 @@ export async function BuyCourse(
 }
 
 // Verify the Payment
-async function verifyPayment(bodyData : any, token :string, navigate : any, dispatch : any) {
+async function verifyPayment(bodyData : any, token : any, navigate : any, dispatch : any) {
   const toastId = toast.loading("Verifying Payment...")
   dispatch(setPaymentLoading(true))
   try {
@@ -138,7 +139,7 @@ async function sendPaymentSuccessEmail(response : any, amount : any, token : str
       {
         orderId: response.razorpay_order_id,
         paymentId: response.razorpay_payment_id,
-        amount,
+        amount : amount,
       },
       {
         Authorization: `Bearer ${token}`,

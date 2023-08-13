@@ -10,7 +10,7 @@ import {
 } from "../middlewares/auth";
 
 router.post("/capturePayment", auth, isStudent, capturePayment);
-router.post("/verifySignature", auth, isStudent, verifySignature);
+router.post("/verifyPayment", auth, isStudent, verifySignature);
 router.post(
   "/sendPaymentSuccessEmail",
   auth,

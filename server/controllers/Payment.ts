@@ -3,7 +3,7 @@ import Course from "../models/Course";
 import User from "../models/User";
 import { Request, Response } from "express";
 import instance from "../config/razorpay";
-const mailSender = require('../utils/mailSender');
+import mailSender from "../utils/mailSender"; 
 import courseEnrollmentMail from "../mail/template/CourseEnrollmentEmail";
 import { AuthenticatedRequest } from "../middlewares/auth";
 import crypto from "crypto";
@@ -56,7 +56,7 @@ export const capturePayment = async (req: AuthenticatedRequest, res: Response) =
     const options = {
         amount: totalAmount * 100,
         currency : "INR",
-        recipt: Math.random().toString(36).substring(2),
+       // recipt: Math.random().toString(36).substring(2),
         }
 
     try{
@@ -65,7 +65,6 @@ export const capturePayment = async (req: AuthenticatedRequest, res: Response) =
             {
             success: true , 
             paymentResponse
-
         });
     }
         catch(err){
@@ -96,7 +95,7 @@ export const verifySignature = async (req: AuthenticatedRequest, res: Response) 
     let body = razorpay_order_id + "|" + razorpay_payment_id
   
     const expectedSignature = crypto
-      .createHmac("sha256", process.env.RAZORPAY_SECRET!)
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
       .update(body.toString())
       .digest("hex")
   
@@ -159,7 +158,7 @@ const enrollStudents = async (courses : any, userId : any, res : Response) => {
           )
         )
   
-        console.log("Email sent successfully: ", emailResponse.response)
+        console.log("Email sent successfully: ", emailResponse?.response)
       } catch (error) {
         console.log(error)
         return res.status(400).json({ success: false, error })
