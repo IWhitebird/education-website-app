@@ -4,7 +4,7 @@ interface ViewCourseState {
     courseSectionData: any
     courseEntireData: any
     completedLectures: any
-    totalNoOfLectures: number
+    totalNoOfLectures: any
 }
 
 

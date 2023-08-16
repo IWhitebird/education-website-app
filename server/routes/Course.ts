@@ -46,6 +46,12 @@ const router = Router();
   // Importing Middlewares
   import { auth, isInstructor, isStudent, isAdmin 
   } from "../middlewares/auth";
+
+  import {
+    updateCourseProgress,
+    // getProgressPercentage,
+  } from "../controllers/CourseProgress"
+  
 // ********************************************************************************************************
 //                                      Course routes
 // ********************************************************************************************************
@@ -76,6 +82,10 @@ router.post("/editCourse", auth, isInstructor, editCourse)
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
 // Delete a Course
 router.delete("/deleteCourse", deleteCourse)
+// Update Course Progress
+router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress)
+// Get Course Progress
+// router.post("/getCourseProgress", auth, isStudent, getProgressPercentage)
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)

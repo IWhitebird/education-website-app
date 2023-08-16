@@ -337,7 +337,7 @@ export const getFullDetailsOfCourse = async (courseId : any, token : any) => {
 }
 
 // mark a lecture as complete
-export const markLectureAsComplete = async (data : FormData, token : any) => {
+export const markLectureAsComplete = async (data : any, token : any) => {
   let result = null
   console.log("mark complete data", data)
   const toastId = toast.loading("Loading...")
@@ -365,7 +365,7 @@ export const markLectureAsComplete = async (data : FormData, token : any) => {
 }
 
 // create a rating for course
-export const createRating = async (data : FormData, token : any) => {
+export const createRating = async (data : any, token : any) => {
   const toastId = toast.loading("Loading...")
   let success = false
   try {
