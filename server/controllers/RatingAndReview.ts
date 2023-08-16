@@ -6,12 +6,13 @@ import mongoose from "mongoose";
 
 export async function createRating(req: AuthenticatedRequest, res: Response) {
         try{
-            const { userId} = req.user.id;
+            const userId = req.user.id;
             const { rating , review , courseId } = req.body;
     
-            const courseEnrolled = await Course.findOne({ _id: courseId, 
-                                                            studentsEnrolled: {$elemMatch : {$eq : userId} }
-                                                        });
+            const courseEnrolled = await Course.findOne({
+                _id: courseId,
+                studentsEnrolled: { $elemMatch: { $eq: userId } }
+            });
     
             if(!courseEnrolled){
                 return res.status(404).json({
