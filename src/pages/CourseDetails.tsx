@@ -50,7 +50,7 @@ function CourseDetails() {
   // Calculating Avg Review count
   const [avgReviewCount, setAvgReviewCount] = useState(0)
   useEffect(() => {
-    const count = GetAvgRating(response?.data?.courseDetails.ratingAndReviews)
+    const count = GetAvgRating(response?.data?.courseDetails.ratingAndReview)
     setAvgReviewCount(count)
   }, [response])
   console.log("avgReviewCount: ", avgReviewCount)

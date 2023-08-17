@@ -1,14 +1,15 @@
 import express, { Router } from "express";
 const router: Router = express.Router();
 
-import { auth } from "../middlewares/auth";
+import { auth , isInstructor } from "../middlewares/auth";
 import {
   deleteAccount,
   updateProfile,
   getAllUserDetails,
   updateDisplayPicture,
   getEnrolledCourses,
-  changePassword
+  changePassword,
+  instructorDashboard,
 } from "../controllers/Profile";
 
 // Profile routes
@@ -18,5 +19,7 @@ router.get("/getUserDetails", auth, getAllUserDetails);
 router.get("/getEnrolledCourses", auth, getEnrolledCourses);
 router.put("/updateDisplayPicture", auth, updateDisplayPicture);
 router.post("/changepassword", auth, changePassword)
+router.get("/instructorDashboard", auth, isInstructor, instructorDashboard)
+
 
 export default router;

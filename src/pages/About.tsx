@@ -11,6 +11,7 @@ import Quote from "../components/core/AboutPage/Quote"
 import StatsComponenet from "../components/core/AboutPage/Stats"
 import HighlightText from "../components/core/HomePage/HighlightText"
 import Footer from "../components/common/Footer"
+import ReviewSlider from "../components/common/ReviewSlider"
 
 const About : React.FC = () => {
   return (
@@ -114,6 +115,7 @@ const About : React.FC = () => {
           Reviews from other learners
         </h1>
         {/* <ReviewSlider /> */}
+        <ReviewSlider />  
       </div>
       {/* <Footer /> */}
       <Footer />

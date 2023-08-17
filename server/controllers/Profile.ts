@@ -6,6 +6,7 @@ import { get } from "http";
 import { UploadToCloudinary } from "../utils/imageUploader";
 import convertSecondsToDuration from "../utils/secToDuration";
 import CourseProgress from "../models/CourseProgress";
+import Course from "../models/Course";
 
 export const updateProfile = async (req : AuthenticatedRequest, res : Response) => {
     try{
@@ -206,3 +207,32 @@ export const changePassword = async (req: AuthenticatedRequest, res: Response) =
       res.status(500).json({ success: false, message: "Internal server error in changePassword" });
     }
   };
+
+
+export const instructorDashboard = async (req : AuthenticatedRequest, res : Response) => {
+  try {
+    const courseDetails = await Course.find({ instructor: req.user.id })
+
+    const courseData = courseDetails.map((course) => {
+      const totalStudentsEnrolled = course.studentsEnrolled.length
+      const totalAmountGenerated = totalStudentsEnrolled * course.price
+
+      // Create a new object with the additional fields
+      const courseDataWithStats = {
+        _id: course._id,
+        courseName: course.courseName,
+        courseDescription: course.courseDescription,
+        // Include other course properties as needed
+        totalStudentsEnrolled,
+        totalAmountGenerated,
+      }
+
+      return courseDataWithStats
+    })
+
+    res.status(200).json({ courses: courseData })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server Error" })
+  }
+}

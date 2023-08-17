@@ -103,7 +103,7 @@ export async function getAllCourses(req: Request, res: Response) {
              coursePrice:true , 
              thumbnailImage:true,
              instructor:true ,
-             ratingAndReviews:true , 
+             ratingAndReview:true , 
              studentsEnrolled:true , 
             })
              .populate("instructor")
@@ -134,14 +134,15 @@ export async function getCourseDetails(req: Request, res: Response) {
             },
         })
         .populate("category")
-      //  .populate("ratingAndReviews")
+        .populate("ratingAndReview")
         .populate({
             path: "courseContent",
             populate: {
                 path: "subSections",
                 select: "-video",
             }
-        }).exec();
+        })
+        .exec();
 
         const courseDetails = tempRes[0];
 

@@ -1,6 +1,7 @@
-export default function GetAvgRating(ratingArr : any[]) {
+export default function GetAvgRating(ratingArr : any) {
     if (ratingArr?.length === 0) return 0
-    const totalReviewCount = ratingArr?.reduce((acc, curr) => {
+    
+    const totalReviewCount = ratingArr?.reduce((acc : any, curr : any) => {
       acc += curr.rating
       return acc
     }, 0)

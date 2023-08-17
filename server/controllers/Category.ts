@@ -116,6 +116,13 @@ export async function categoryPageDetails(req: Request, res: Response) {
           path : "instructor",
         }
       })
+      .populate({
+        path: "course",
+        match: { status: "published" },
+        populate: {
+          path : "ratingAndReview",
+        }
+      })
       .exec()
 
     const allCourses = allCategories.flatMap((category) => category.course);
