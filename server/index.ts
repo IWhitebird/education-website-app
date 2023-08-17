@@ -26,7 +26,7 @@ app.use(cookieParser());
 app.use(cors(
     {
         // origin: "http://localhost:3000",
-        origin: "https://education-website-app.vercel.app/",
+        origin: "https://education-website-app-main-server.onrender.com",
         credentials: true,
     }
 ));
