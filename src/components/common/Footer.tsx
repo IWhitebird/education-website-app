@@ -172,7 +172,7 @@ const Footer: React.FC = () => {
             })}
           </div>
 
-          <div className="text-center">Made with ❤️ Kourse © 2023 EducationWebsite</div>
+          <div className="text-center">Made with ❤️ Study Notion © 2023 EducationWebsite</div>
         </div>
       </div>
     </div>
