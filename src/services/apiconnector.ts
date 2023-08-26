@@ -13,6 +13,7 @@ export const apiConnector: IApiConnector = async (method, url, bodyData , header
         url : `${url}`,
         data : bodyData ? bodyData : null,
         headers : headers ? headers : null,
-        params : params ? params : null
+        params : params ? params : null,
+        withCredentials : true
     })
 };
