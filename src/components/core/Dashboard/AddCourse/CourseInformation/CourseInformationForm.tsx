@@ -228,9 +228,9 @@ export default function CourseInformationForm() {
             {...register("coursePrice", {
               required: true,
               valueAsNumber: true,
-              pattern : {
-                value: /^(0|[1-9]\d*)(\.\d+)?$/,
-              },
+              // pattern : {
+              //   value: /^(0|[1-9]\d*)(\.\d+)?$/,
+              // },
             })}
             className="form-style w-full !pl-12"
           />
